@@ -4,23 +4,27 @@ import { StartScreen } from './components/StartScreen'
 import { EndScreen } from './components/EndScreen'
 
 import { useGameLogic } from './hooks/useGameLogic'
-import { GAME_TIMER } from './lib/constants'
 
 const App = () => {
   const {
     gameState,
+    mode,
     score,
     selectedImage,
     isLoading,
     gameImages,
-    bestTime,
     timeLeft,
     error,
+    bestScores,
+    setBestScores,
     handleStartGame,
     handleResetGame,
     handleImageClick,
+    handleModeChange,
+    getGameSettings,
   } = useGameLogic()
 
+  const { timer } = getGameSettings(mode)
   return (
     <div className='min-h-screen bg-gradient-to-b from-blue-100 to-purple-100 p-4'>
       <div className='max-w-6xl mx-auto'>
@@ -32,9 +36,12 @@ const App = () => {
 
         {gameState === 'start' && (
           <StartScreen
-            bestTime={bestTime}
+            bestScores={bestScores}
+            setBestScores={setBestScores}
             isLoading={isLoading}
             onStart={handleStartGame}
+            mode={mode}
+            onModeChange={handleModeChange}
           />
         )}
 
@@ -42,6 +49,7 @@ const App = () => {
           <div className='space-y-6'>
             <GameControls
               score={score}
+              mode={mode}
               timeLeft={timeLeft}
               onReset={handleResetGame}
             />
@@ -56,7 +64,7 @@ const App = () => {
         {gameState === 'complete' && (
           <EndScreen
             score={score}
-            timeUsed={GAME_TIMER - timeLeft}
+            timeUsed={timer - timeLeft}
             timeLeft={timeLeft}
             onReset={handleResetGame}
           />

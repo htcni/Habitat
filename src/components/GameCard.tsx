@@ -17,7 +17,7 @@ export const GameCard: React.FC<GameCardProps> = ({
   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
     <Card
       className={`cursor-pointer overflow-hidden ${
-        isSelected ? 'ring-2 ring-blue-500' : ''
+        isSelected ? 'ring-4 ring-blue-500' : ''
       } ${image.matched ? 'opacity-50' : ''}`}
       onClick={() => onImageClick(image)}>
       <div className='aspect-square relative'>
